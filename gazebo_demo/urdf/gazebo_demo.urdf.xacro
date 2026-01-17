@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="gazebo_demo">
+
+  <link name="base_link">
+    <inertial>
+      <origin
+        xyz="0 9.74542958129844E-19 -4.31390337655099E-18"
+        rpy="0 0 0" />
+      <mass
+        value="6.99004365423729" />
+      <inertia
+        ixx="0.0101938136624294"
+        ixy="0"
+        ixz="-3.37700910261971E-35"
+        iyy="0.0101938136624294"
+        iyz="-8.16962303997948E-35"
+        izz="0.00873755456779662" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gazebo_demo/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.537254901960784 0.349019607843137 0.337254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gazebo_demo/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+    <dynamic damping="0.7" friction="0.5"/>
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <link
+    name="link_1">
+    <inertial>
+      <origin
+        xyz="0.1 -1.86377227087894E-19 -1.38777878078145E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.12492033114729" />
+      <inertia
+        ixx="0.000798459868114599"
+        ixy="1.67727625611222E-20"
+        ixz="8.85083255431749E-21"
+        iyy="0.00679752984625413"
+        iyz="9.66746937132908E-21"
+        izz="0.00712727290972403" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gazebo_demo/meshes/link_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 0.32" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://gazebo_demo/meshes/link_1.STL" />
+      </geometry>
+    </collision>
+    <dynamic damping="0.7" friction="0.5"/>
+  </link>
+
+  <gazebo reference="link_1">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <joint name="joint_1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.075"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="1"
+      velocity="10" />
+  </joint>
+
+  <transmission name="joint_1_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint_1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="joint_1_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/gazebo_demo</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+</robot>
