@@ -1,0 +1,42 @@
+<launch>
+ 
+  <param name="robot_description" command="$(find xacro)/xacro $(find gazebo_demo1)/urdf/gazebo_demo1.urdf.xacro" />
+ 
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+ 
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find gazebo_demo1)/worlds/gazebo_demo1.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+ 
+ 
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model myrobot -param robot_description"/>
+ 
+ 
+  <rosparam file="$(find gazebo_demo1)/config/joint_names_gazebo_demo1.yaml" command="load"/>
+ 
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	output="screen" ns="/bengine" args="LF_position_controller
+                                      LB_position_controller
+                                      RF_position_controller
+                                      RB_position_controller
+"/>
+ 
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+    <remap from="/joint_states" to="/gazebo_demo1/joint_states" />
+  </node> -->
+ 
+ 
+</launch>
