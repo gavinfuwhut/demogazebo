@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<robot name="gazebo_demo">
+<robot name="bengine">
 
   <link name="base_link">
     <inertial>
@@ -93,8 +93,7 @@
     <material>Gazebo/Black</material>
   </gazebo>
 
-  <joint name="joint_1"
-    type="revolute">
+  <joint name="joint_1" type="revolute">
     <origin
       xyz="0 0 0.075"
       rpy="0 0 0" />
@@ -124,7 +123,7 @@
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/gazebo_demo</robotNamespace>
+      <robotNamespace>/bengine</robotNamespace>
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       <legacyModeNS>true</legacyModeNS>
     </plugin>

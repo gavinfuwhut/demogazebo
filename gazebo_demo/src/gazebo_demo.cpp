@@ -8,7 +8,7 @@ int main(int argc, char  *argv[])
     ros::init(argc,argv,"control_gazebo_demo");//节点初始化
     ros::NodeHandle nh;
     //创建发布者对象话题为/gazebo_demo/joint1_position_controller/command
-    ros::Publisher pub = nh.advertise<std_msgs::Float64>("/gazebo_demo/joint1_position_controller/command",10);
+    ros::Publisher pub = nh.advertise<std_msgs::Float64>("/bengine/joint1_position_controller/command",10);
     std_msgs::Float64 control_gazebo_demo;
     control_gazebo_demo.data=0.0;
     bool flag=0;//0weizeng 1weijian
